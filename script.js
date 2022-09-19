@@ -86,17 +86,17 @@ function score() {                                                              
 }
 //-----------------------------------------------------------------COLLISION---------------------------------------------------------------------------------------------------------------------------------------------------
 function collision() {                                                                              // Creating collision function
-
+    // --> Top side collision
     if (snake[0] < 0) {                                                                             // If the snake's head has a value lower than 0, then it's out of bounds from the top side
         clearInterval(movement);                                                                    // The movement of the snake will be stoped
         gameON = false;                                                                             // The game will end
     }
-
+    // --> Bottom side collision
     if (snake[0] > 624) {                                                                           // If the snake's head has a value greated than the total units of the map, then it's out of bounds from the bottom side
         clearInterval(movement);                                                                    // The movement of the snake will be stoped
         gameON = false;                                                                             // The game will end
     }
-
+    // --> Side wall collision
     for (let i = 24; i < 624; i += 25) {                                                            // Going throw each edge on the right side 
         if (snake[0] == i + 1 && snake[1] == i || snake[0] == i && snake[1] == i + 1) {             // If the first two element of the snake array are equal to the left of right edge, then it's out of bounds
             gameBoard[snake[0]].style.backgroundColor = 'gainsboro';                                // Changing snake's head color so that it will not come out from out of bounds                
@@ -104,10 +104,9 @@ function collision() {                                                          
             gameON = false;                                                                         // The game will end
         }
     }
-
+    // --> Collision with itself
     for (let i = 1; i < snake.length; ++i) {                                                        // Going throw each element of the snake 
         if (snake[0] == snake[i]) {                                                                 // If the snake's head is equal to any other element of the snake array, then it has collided with itself
-            gameBoard[snake[0]].style.backgroundColor = 'black';
             clearInterval(movement);                                                                // The movement of the snake will be stopped
             gameON = false;                                                                         // The game will end;
         }
