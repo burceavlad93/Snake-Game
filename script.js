@@ -64,24 +64,15 @@ function goingLEFT() {                                                          
 //-----------------------------------------------------------------GENERATE FOOD-----------------------------------------------------------------------------------------------------------------------------------------------
 function generateFood() {                                                                           // Creating generate food function
 
-    let foodPosition = Math.floor(Math.random() * (624 - 0 + 1) + 0);                               // Creating a variable to store the random generated pozition of the food 
-    let validPosisition = false;                                                                    // Creating a boolean value to check if the position of the food is valid
+    let foodPosition = Math.floor(Math.random() * (624 - 0 + 1) + 0);                               // Generates a random number between 0 and 624
+    let index = snake.indexOf(foodPosition);                                                        // Cheking the random number to not be in the snake array
 
-    while (!validPosisition) {                                                                      // While the position is not a valid one, we'll check for a new valid position
-        validPosisition = true;                                                                     // Changed the boolean value to true in case the new position is a valid one
-        for (let i = 0; i < snake.length; ++i) {                                                    // Going throw each element of the snake 
-            if (foodPosition == snake[i]) {                                                         // If the generated position of the food is equal to one of the elements of the snake
-                foodPosition = Math.floor(Math.random() * (624 - 0 + 1) + 0);                       // It is not a valid position and will generate a new one
-                validPosisition = false;                                                            // Setting the boolean value back to false
-                break;                                                                              // Break the for loop and start the validation process again
-            }
-        }
+    if (index == -1) {                                                                              // If the generated number is not in the array then the index will be equal to -1
+        gameBoard[foodPosition].style.backgroundColor = 'red';                                      // Coloring the valid pozition         
+        return foodPosition;                                                                        // Returning the pozition of the food
+    } else {                                                                                        // In case the position is ocupied by the snake's body
+        return generateFood();                                                                      // Returning the current function to search for a new valid position
     }
-
-    if (validPosisition) {                                                                          // If the position generated is valid
-        gameBoard[foodPosition].style.backgroundColor = 'red';                                      // That respective unit will be colored RED
-    }
-    return foodPosition;                                                                            // It will return a value that will be used to verify if the snake has reached the food
 }
 //-----------------------------------------------------------------SCORE-------------------------------------------------------------------------------------------------------------------------------------------------------
 function score() {                                                                                  // Creating score function
@@ -108,7 +99,7 @@ function collision() {                                                          
 
     for (let i = 24; i < 624; i += 25) {                                                            // Going throw each edge on the right side 
         if (snake[0] == i + 1 && snake[1] == i || snake[0] == i && snake[1] == i + 1) {             // If the first two element of the snake array are equal to the left of right edge, then it's out of bounds
-            gameBoard[snake[0]].style.backgroundColor = 'gainsboro'                                 // Changing snake's head color so that it will not come out from out of bounds                
+            gameBoard[snake[0]].style.backgroundColor = 'gainsboro';                                // Changing snake's head color so that it will not come out from out of bounds                
             clearInterval(movement);                                                                // The movement of the snake will be stopped 
             gameON = false;                                                                         // The game will end
         }
@@ -116,6 +107,7 @@ function collision() {                                                          
 
     for (let i = 1; i < snake.length; ++i) {                                                        // Going throw each element of the snake 
         if (snake[0] == snake[i]) {                                                                 // If the snake's head is equal to any other element of the snake array, then it has collided with itself
+            gameBoard[snake[0]].style.backgroundColor = 'black';
             clearInterval(movement);                                                                // The movement of the snake will be stopped
             gameON = false;                                                                         // The game will end;
         }
