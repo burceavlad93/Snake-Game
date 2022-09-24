@@ -150,7 +150,10 @@ document.addEventListener('keydown', function (key) {                           
             directionRIGHT = false;                                                                 // Changed boolean value back
             directionLEFT = true;                                                                   // Since the directions is LEFT, the boolean value changes
             movement = setInterval(goingLEFT, interval);                                            // The snake will only be allowed to move UP, DOWN or LEFT
+        } else if (key.code == "Escape") {
+            clearInterval(movement);
         }
+
     }
 });
 //-----------------------------------------------------------------RESET GAME---------------------------------------------------------------------------------------------------------------------------------------------------
