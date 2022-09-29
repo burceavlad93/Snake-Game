@@ -19,7 +19,7 @@ for (let i = 0; i < 625; ++i) {                                                 
 
 const gameBoard = document.querySelectorAll('.unit');                                               // Creating game board object
 drawSnake();                                                                                        // Calling draw snake function
-foodLocation = generateFood();                                                                      // Calling generate food function and saving the food location
+generateFood();                                                                      // Calling generate food function and saving the food location
 //------------------------------------------------------------------GAME MECHANIC--------------------------------------------------------------------------------------------------------------------------------------------
 function drawSnake() {                                                                              // Creating draw snake function
     for (let i = 0; i < snake.length; ++i) {                                                        // Going throw each element of the snake array
@@ -68,8 +68,9 @@ function generateFood() {                                                       
     let index = snake.indexOf(foodPosition);                                                        // Cheking the random number to not be in the snake array
 
     if (index == -1) {                                                                              // If the generated number is not in the array then the index will be equal to -1
-        gameBoard[foodPosition].style.backgroundColor = 'red';                                      // Coloring the valid pozition         
-        return foodPosition;                                                                        // Returning the pozition of the food
+        gameBoard[foodPosition].style.backgroundColor = 'red';                                      // Coloring the valid pozition       
+        foodLocation = foodPosition;                                                                // Passing the food position to a variable to use later on
+        return foodLocation;                                                                        // Returning the pozition of the food
     } else {                                                                                        // In case the position is ocupied by the snake's body
         return generateFood();                                                                      // Returning the current function to search for a new valid position
     }
