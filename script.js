@@ -75,12 +75,10 @@ function generateFood() {                                                       
     let yFoodlocation = Math.floor(Math.random() * (24 - 0 + 1) + 0);
     for (let i = 0; i < snake.length; ++i) {                                                        // If the position generated is on the snakes's body, return the current function and try finding a valid position
         if (snake[i].x == xFoodLocation && snake[i].y == yFoodlocation) {
-            console.log('!!!!!!!!!!!!!!!!!!!!!!!');
             return generateFood();
         }
     }
     grid[xFoodLocation][yFoodlocation].style.backgroundColor = 'red';
-    console.log(`food location --> x: ${xFoodLocation} y: ${yFoodlocation}`)
     return foodLocation[0].x = xFoodLocation, foodLocation[0].y = yFoodlocation;
 }
 //------------------------------------------------------------------SNAKE GAMEPLAY FUNCTION--------------------------------------------------------------------------------------------------------------------------------------
