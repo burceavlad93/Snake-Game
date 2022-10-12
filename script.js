@@ -1,5 +1,5 @@
 'use strict'
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 let currentKey;
 let movement;                                                                                       // Creating variable for setInterval function    
 let foodLocation = [{ x: -1, y: -1 }];                                                              // Creating variable for food location;     
@@ -17,8 +17,7 @@ let snake = [                                                                   
 let gameScore = document.getElementById('score');                                                   // Creating score object
 const gameContainer = document.getElementById('main');                                              // Creating game container object
 const resetBtn = document.getElementById('restart_btn');                                            // Creating reset button object
-
-//------------------------------------------------------------------GAME LOGIC-------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------GAME LOGIC---------------------------------------------------------------------------------------------------------------------------------------------------
 drawMap();                                                                                          // Calling 'drawMap' function
 drawSnake();                                                                                        // Calling 'drawSnake' function
 generateFood();                                                                                     // Calling 'generateFood' function
@@ -45,13 +44,12 @@ document.addEventListener('keydown', function (key) {                           
         }
     }
 });
-// The game's reset button
+//------------------------------------------------------------------RESET BUTTON-------------------------------------------------------------------------------------------------------------------------------------------------
 resetBtn.addEventListener('click', function () {
     location.reload();
 });
-//------------------------------------------------------------------DRAW MAP FUNCTION-------------------------------------------------------------------------------------------------------------------------------------
-// --> Creating the game board
-function drawMap() {                                                                                // DrawMap function                                                                       
+//------------------------------------------------------------------DRAW MAP FUNCTION--------------------------------------------------------------------------------------------------------------------------------------------
+function drawMap() {                                                                                // Creating the game board                                                                       
     let element = -1;
     for (let row = 0; row < grid.length; row++) {
         grid[row] = new Array(25);
@@ -65,20 +63,17 @@ function drawMap() {                                                            
         }
     }
 }
-//------------------------------------------------------------------DRAW SNAKE FUNCTION-------------------------------------------------------------------------------------------------------------------------------------
-// --> Creating the snake on the board
-function drawSnake() {                                                                              // DrawSnake Function
+//------------------------------------------------------------------DRAW SNAKE FUNCTION------------------------------------------------------------------------------------------------------------------------------------------
+function drawSnake() {                                                                              // Creating the snake on the board
     for (let i = 0; i < snake.length; ++i) {
         grid[snake[i].x][snake[i].y].style.backgroundColor = 'black';
     }
 }
-//------------------------------------------------------------------GENERATE FOOD FUNCTION-------------------------------------------------------------------------------------------------------------------------------------
-// --> Generates a random position for the food on the x and y axis  
-function generateFood() {                                                                           // GenerateFood function
+//------------------------------------------------------------------GENERATE FOOD FUNCTION---------------------------------------------------------------------------------------------------------------------------------------
+function generateFood() {                                                                           // Generates a random position for the food on the x and y axis
     let xFoodLocation = Math.floor(Math.random() * (24 - 0 + 1) + 0);
     let yFoodlocation = Math.floor(Math.random() * (24 - 0 + 1) + 0);
-    // --> If the position generated is on the snakes's body, return the current function and try finding a valid position
-    for (let i = 0; i < snake.length; ++i) {
+    for (let i = 0; i < snake.length; ++i) {                                                        // If the position generated is on the snakes's body, return the current function and try finding a valid position
         if (snake[i].x == xFoodLocation && snake[i].y == yFoodlocation) {
             console.log('!!!!!!!!!!!!!!!!!!!!!!!');
             return generateFood();
@@ -88,9 +83,8 @@ function generateFood() {                                                       
     console.log(`food location --> x: ${xFoodLocation} y: ${yFoodlocation}`)
     return foodLocation[0].x = xFoodLocation, foodLocation[0].y = yFoodlocation;
 }
-//------------------------------------------------------------------SNAKE GAMEPLAY FUNCTION-------------------------------------------------------------------------------------------------------------------------------------
-// --> Core mechanic of the game
-function snakeGameplay(direction) {
+//------------------------------------------------------------------SNAKE GAMEPLAY FUNCTION--------------------------------------------------------------------------------------------------------------------------------------
+function snakeGameplay(direction) {                                                                 // Core mechanic of the game
     if (direction == "ArrowUp") snake.unshift({ x: snake[0].x - 1, y: snake[0].y });                // Move snake object UP
     if (direction == "ArrowDown") snake.unshift({ x: snake[0].x + 1, y: snake[0].y });              // Move snake object DOWN
     if (direction == "ArrowRight") snake.unshift({ x: snake[0].x, y: snake[0].y + 1 });             // Move snake object RIGHT
@@ -107,9 +101,8 @@ function snakeGameplay(direction) {
         }
     }
 }
-//------------------------------------------------------------------COLLISION FUNCTION-------------------------------------------------------------------------------------------------------------------------------------
-// --> checks to see if the snake object has hit one of the walls or himself
-function collision() {
+//------------------------------------------------------------------COLLISION FUNCTION-------------------------------------------------------------------------------------------------------------------------------------------
+function collision() {                                                                              // Checks to see if the snake object has hit one of the walls or himself
     // --> Top side & Bottom side & Left side & Right side collision
     if (snake[0].x == -1 || snake[0].x == 25 || snake[0].y == -1 || snake[0].y == 25) {
         clearInterval(movement);
@@ -123,22 +116,16 @@ function collision() {
         }
     }
 }
-//------------------------------------------------------------------REMOVE TAIL FUNCTION-------------------------------------------------------------------------------------------------------------------------------------
-// --> Removes the last element from the snake object 
-function removeTail() {
+//------------------------------------------------------------------REMOVE TAIL FUNCTION---------------------------------------------------------------------------------------------------------------------------------------- 
+function removeTail() {                                                                             // Removes the last element from the snake object
     grid[snake[snake.length - 1].x][snake[snake.length - 1].y].style.backgroundColor = 'gainsboro';
     snake.pop();
 }
-//------------------------------------------------------------------SCORE FUNCTION-------------------------------------------------------------------------------------------------------------------------------------
-// --> Keeps track of the score
-function score() {                                                                                  // Creating score function
-    ++inGameScore;                                                                                  // Incrementing in game score variable
-    gameScore.textContent = `Score ${inGameScore}`;                                                 // Posting in game score
+//------------------------------------------------------------------SCORE FUNCTION-----------------------------------------------------------------------------------------------------------------------------------------------
+function score() {                                                                                  // Keeps track of the score
+    gameScore.textContent = `Score ${++inGameScore}`;                                               
 }
-//------------------------------------------------------------------SPEED FUNCTION-------------------------------------------------------------------------------------------------------------------------------------
-// --> Increases speed everytime you acquire 125 points 
-function speed() {                                                                                  // Creating speed function
-    if (inGameScore % 125 == 0) {                                                                   // If the score can be divided by 125;
-        interval -= 10;
-    }
+//------------------------------------------------------------------SPEED FUNCTION-----------------------------------------------------------------------------------------------------------------------------------------------
+function speed() {                                                                                  // Increases speed everytime you acquire 125 points
+    if (inGameScore % 125 == 0) interval -= 10;
 }
